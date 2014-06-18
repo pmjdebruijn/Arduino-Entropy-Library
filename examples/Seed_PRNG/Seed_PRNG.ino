@@ -34,7 +34,6 @@ void setup()
   while (!Serial) {
     ; // wait for serial port to connect. Needed for Leonardo and Due
   }
-  Entropy.Initialize();
 
   // This routine sets up the watch dog timer with interrupt handler to maintain a
   // pool of real entropy for use in sketches.  This mechanism is relatively slow
