@@ -27,7 +27,7 @@ void setup()
   uint32_t random_long;
   float random_float;
   
-  Serial.begin(115200);
+  Serial.begin(9600);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for Leonardo and Due
   }
