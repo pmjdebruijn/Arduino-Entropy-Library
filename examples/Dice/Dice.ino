@@ -19,8 +19,8 @@ byte roll[2];
 void setup()
 {
   Entropy.initialize();
-  Dice[0].Initialize(7,8,2,3,4,5,6);
-  Dice[1].Initialize(7,8,2,3,4,5,6);
+  Dice[0].initialize(7,8,2,3,4,5,6);
+  Dice[1].initialize(7,8,2,3,4,5,6);
   pinMode(RollButton,INPUT_PULLUP);
   pinMode(Die1, OUTPUT);
   pinMode(Die2, OUTPUT);
@@ -39,12 +39,12 @@ void loop()
     roll[1] = Entropy.random(1,7);
   }
   digitalWrite(Die1, HIGH);
-  Dice[0].Show(roll[0]);
+  Dice[0].show(roll[0]);
   delay(100);
   PORTD = 0x00;
   PORTB = 0x00;
   digitalWrite(Die2, HIGH);
-  Dice[0].Show(roll[1]);
+  Dice[0].show(roll[1]);
   delay(100);
   PORTD = 0x00;
   PORTB = 0x00;

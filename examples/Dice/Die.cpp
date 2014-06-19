@@ -26,7 +26,7 @@
 // a   b
 // c d e
 // f   g
-void Die::Initialize(int a, int b, int c, int d, int e, int f, int g)
+void Die::initialize(int a, int b, int c, int d, int e, int f, int g)
 {
   // Store pin assignments
   led_a = a;
@@ -55,9 +55,9 @@ void Die::Initialize(int a, int b, int c, int d, int e, int f, int g)
 }
 
 // Turn on the appropriate LED's based upon value
-void Die::Show(unsigned char value)
+void Die::show(unsigned char value)
 {
-  Off();
+  off();
   delay(200);
   switch (value)
   {
@@ -95,11 +95,11 @@ void Die::Show(unsigned char value)
       digitalWrite(led_g, HIGH);
       break;
     default:
-      Error();
+      error();
   }
 }
 
-void Die::On(void)
+void Die::on(void)
 {
   digitalWrite(led_a, HIGH);
   digitalWrite(led_b, HIGH);
@@ -110,7 +110,7 @@ void Die::On(void)
   digitalWrite(led_g, HIGH);
 }
 
-void Die::Off(void)
+void Die::off(void)
 {
   digitalWrite(led_a, LOW);
   digitalWrite(led_b, LOW);
@@ -121,13 +121,13 @@ void Die::Off(void)
   digitalWrite(led_g, LOW);
 }
 
-void Die::Error(void)
+void Die::error(void)
 {
   for (int i=0; i<10; i++)
   {
     delay(50);
-    On();
+    on();
     delay(50);
-    Off();
+    off();
   }
 }

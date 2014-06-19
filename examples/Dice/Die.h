@@ -23,12 +23,12 @@
 class Die
 {
 public:
-  void Initialize(int a, int b, int c, int d, int e, int f, int g);
-  void Show(unsigned char value);
+  void initialize(int a, int b, int c, int d, int e, int f, int g);
+  void show(unsigned char value);
  private:
   int led_a, led_b, led_c, led_d, led_e, led_f, led_g;
-  void On(void);
-  void Off(void);
-  void Error(void);
+  void on(void);
+  void off(void);
+  void error(void);
 };
 #endif
