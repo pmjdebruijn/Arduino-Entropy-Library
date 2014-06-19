@@ -31,7 +31,7 @@ void setup()
   // pool of real entropy for use in sketches.  This mechanism is relatively slow
   // since it will only produce a little less than two 32-bit random values per 
   // second.
-  Entropy.Initialize();
+  Entropy.initialize();
 
 }
 

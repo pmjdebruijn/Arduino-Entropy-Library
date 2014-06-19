@@ -18,7 +18,7 @@ byte roll[2];
 
 void setup()
 {
-  Entropy.Initialize();
+  Entropy.initialize();
   Dice[0].Initialize(7,8,2,3,4,5,6);
   Dice[1].Initialize(7,8,2,3,4,5,6);
   pinMode(RollButton,INPUT_PULLUP);

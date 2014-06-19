@@ -39,7 +39,7 @@ void setup()
   // pool of real entropy for use in sketches.  This mechanism is relatively slow
   // since it will only produce a little less than two 32-bit random values per 
   // second.
-  Entropy.Initialize();
+  Entropy.initialize();
 
   // The random method returns an unsigned 32-bit value, which can be cast as a 
   // signed value if needed.  The function will wait until sufficient entropy is

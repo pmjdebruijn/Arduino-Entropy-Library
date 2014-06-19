@@ -52,7 +52,7 @@ union ENTROPY_LONG_WORD
 class EntropyClass
 {
 public:
-  void Initialize(void);
+  void initialize(void);
   uint32_t random(void);
   uint32_t random(uint32_t max);
   uint32_t random(uint32_t min, uint32_t max);

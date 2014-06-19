@@ -16,7 +16,7 @@ random	KEYWORD2
 randomByte	KEYWORD2
 randomWord	KEYWORD2
 available	KEYWORD2
-Initialize	KEYWORD2
+initialize	KEYWORD2
 #######################################
 # Constants (LITERAL1)
 #######################################

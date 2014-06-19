@@ -31,7 +31,7 @@ void setup() {
   }
   
   // Initialize the Entropy library to ensure that the draws are truely random.
-  Entropy.Initialize();
+  Entropy.initialize();
 
   Serial.print("Starting to draw random sequences from 1 to ");
   Serial.println(MAX_VALUE);
