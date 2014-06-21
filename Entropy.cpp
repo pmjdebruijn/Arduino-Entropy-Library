@@ -21,7 +21,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Entropy.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <Arduino.h>
 #include <Entropy.h>
 
 const uint8_t WDT_MAX_8INT=0xFF;

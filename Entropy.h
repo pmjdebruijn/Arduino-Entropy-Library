@@ -19,7 +19,8 @@
 #ifndef Entropy_h
 #define Entropy_h
 
-#include <stdint.h>
+#include <string.h>
+#include <math.h>
 
 // Separate the ARM Due headers we use
 #ifdef ARDUINO_SAM_DUE
