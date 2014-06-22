@@ -34,7 +34,7 @@
 #endif
 
 //  Separate AVR headers from ARM headers
-#ifdef __AVR__  
+#ifdef __AVR__
 #include <avr/interrupt.h>
 #include <avr/wdt.h>
 #include <util/atomic.h>
@@ -43,7 +43,7 @@
 const uint32_t WDT_RETURN_BYTE=256;
 const uint32_t WDT_RETURN_WORD=65536;
 
-union ENTROPY_LONG_WORD 
+union ENTROPY_LONG_WORD
 {
   uint32_t int32;
   uint16_t int16[2];

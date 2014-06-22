@@ -41,7 +41,7 @@ const uint32_t WDT_MAX_32INT=0xFFFFFFFF;
 
 // This function initializes the global variables needed to implement the circular entropy pool and
 // the buffer that holds the raw Timer 1 values that are used to create the entropy pool.  It then
-// Initializes the Watch Dog Timer (WDT) to perform an interrupt every 2048 clock cycles, (about 
+// Initializes the Watch Dog Timer (WDT) to perform an interrupt every 2048 clock cycles, (about
 // 16 ms) which is as fast as it can be set.
 void EntropyClass::initialize(void)
 {
@@ -55,7 +55,7 @@ void EntropyClass::initialize(void)
   cli();                         // Temporarily turn off interrupts, until WDT configured
   MCUSR = 0;                     // Use the MCU status register to reset flags for WDR, BOR, EXTR, and POWR
   _WD_CONTROL_REG |= (1<<_WD_CHANGE_BIT) | (1<<WDE);
-  // WDTCSR |= _BV(WDCE) | _BV(WDE);// WDT control register, This sets the Watchdog Change Enable (WDCE) flag, which is  needed to set the 
+  // WDTCSR |= _BV(WDCE) | _BV(WDE);// WDT control register, This sets the Watchdog Change Enable (WDCE) flag, which is  needed to set the
   _WD_CONTROL_REG = _BV(WDIE);            // Watchdog system reset (WDE) enable and the Watchdog interrupt enable (WDIE)
   sei();                         // Turn interupts on
 #elif defined(ARDUINO_SAM_DUE)
@@ -142,7 +142,7 @@ uint16_t EntropyClass::randomWord(void)
   return random16();
 }
 
-// This function returns a uniformly distributed integer in the range of 
+// This function returns a uniformly distributed integer in the range of
 // of [0,max).  The added complexity of this function is required to ensure
 // a uniform distribution since the naive modulus max (% max) introduces
 // bias for all values of max that are not powers of two.
@@ -150,7 +150,7 @@ uint16_t EntropyClass::randomWord(void)
 // The loops below are needed, because there is a small and non-uniform chance
 // That the division below will yield an answer = max, so we just get
 // the next random value until answer < max.  Which prevents the introduction
-// of bias caused by the division process.  This is why we can't use the 
+// of bias caused by the division process.  This is why we can't use the
 // simpler modulus operation which introduces significant bias for divisors
 // that aren't a power of two
 uint32_t EntropyClass::random(uint32_t max)
@@ -167,25 +167,25 @@ uint32_t EntropyClass::random(uint32_t max)
 	  slice = WDT_MAX_8INT / max;
 	  while (retVal >= max)
 	    retVal = random8() / slice;
-	} 
+	}
       else if (max <= WDT_MAX_16INT) // If only word values are need, make best use of entropy
 	{                            // by diving the long into two words and using individually
 	  slice = WDT_MAX_16INT / max;
 	  while (retVal >= max)
 	    retVal = random16() / slice;
-	} 
-      else 
+	}
+      else
 	{
 	  slice = WDT_MAX_32INT / max;
-	  while (retVal >= max)           
+	  while (retVal >= max)
 	    retVal = random() / slice;
-	}                                 
+	}
     }
   return(retVal);
 }
 
-// This function returns a uniformly distributed integer in the range of 
-// of [min,max).  
+// This function returns a uniformly distributed integer in the range of
+// of [min,max).
 uint32_t EntropyClass::random(uint32_t min, uint32_t max)
 {
   uint32_t tmp_random, tmax;
@@ -211,7 +211,7 @@ float EntropyClass::randomf(void)
   // using integer type and arrange its bit pattern to follow the IEEE754 bit
   // pattern for single precision floating point value in the range of 1.0 - 2.0
   uint32_t tmp_random = random();
-  tmp_random = (tmp_random & 0x007FFFFF) | 0x3F800000;  
+  tmp_random = (tmp_random & 0x007FFFFF) | 0x3F800000;
   // We then copy that binary representation from the temporary integer to the
   // returned floating point value
   memcpy((void *) &fRetVal, (void *) &tmp_random, sizeof(fRetVal));
@@ -240,8 +240,8 @@ float EntropyClass::randomf(float min,float max)
   return(fRetVal);
 }
 
-// This function implements the Marsaglia polar method of converting a uniformly 
-// distributed random numbers to a normaly distributed (bell curve) with the 
+// This function implements the Marsaglia polar method of converting a uniformly
+// distributed random numbers to a normaly distributed (bell curve) with the
 // mean and standard deviation specified.  This type of random number is useful
 // for a variety of purposes, like Monte Carlo simulations.
 float EntropyClass::rnorm(float mean, float stdDev)
@@ -253,7 +253,7 @@ float EntropyClass::rnorm(float mean, float stdDev)
   static bool isSpareReady = false;
 
   if (isSpareReady)
-  { 
+  {
     isSpareReady = false;
     return ((spare * stdDev) + mean);
   } else {
@@ -283,8 +283,8 @@ uint8_t EntropyClass::available(void)
 // Circular buffer is not needed with the speed of the Arduino Due trng hardware generator
 #ifndef ARDUINO_SAM_DUE
 // This interrupt service routine is called every time the WDT interrupt is triggered.
-// With the default configuration that is approximately once every 16ms, producing 
-// approximately two 32-bit integer values every second. 
+// With the default configuration that is approximately once every 16ms, producing
+// approximately two 32-bit integer values every second.
 //
 // The pool is implemented as an 8 value circular buffer
 static void isr_hardware_neutral(uint8_t val)
@@ -310,7 +310,7 @@ static void isr_hardware_neutral(uint8_t val)
     gWDT_entropy_pool[gWDT_pool_end] = gWDT_entropy_pool[gWDT_pool_end];
     gWDT_buffer_position = 0; // Start collecting the next 32 bytes of Timer 1 counts
     if (gWDT_pool_count == WDT_POOL_SIZE) // The entropy pool is full
-      gWDT_pool_start = (gWDT_pool_start + 1) % WDT_POOL_SIZE;  
+      gWDT_pool_start = (gWDT_pool_start + 1) % WDT_POOL_SIZE;
     else // Add another unsigned long (32 bits) to the entropy pool
       ++gWDT_pool_count;
   }
@@ -326,7 +326,7 @@ ISR(WDT_vect)
 #elif defined(__AVR__)
 ISR(WDT_vect)
 {
-  isr_hardware_neutral(TCNT1L); // Record the Timer 1 low byte (only one needed) 
+  isr_hardware_neutral(TCNT1L); // Record the Timer 1 low byte (only one needed)
 }
 
 #elif defined(__arm__) && defined(TEENSYDUINO)
@@ -338,6 +338,6 @@ void lptmr_isr(void)
 }
 #endif
 
-// The library implements a single global instance.  There is no need, nor will the library 
+// The library implements a single global instance.  There is no need, nor will the library
 // work properly if multiple instances are created.
 EntropyClass Entropy;
