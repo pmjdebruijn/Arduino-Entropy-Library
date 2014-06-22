@@ -25,7 +25,7 @@ void setup() {
   
   Serial.begin(9600);
 
-  // Initialize array with the sequence of values we will randomly draw from  
+  // Initialize array with the sequence of values we will randomly draw from
   for (int i=0; i<=MAX_VALUE; i++) {
     RandomDraw[i] = i;
   }

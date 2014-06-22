@@ -21,7 +21,7 @@
 
 #include <Entropy.h>
 
-// The following addresses a problem in version 1.0.5 and earlier of the 
+// The following addresses a problem in version 1.0.5 and earlier of the
 // Arduino IDE that prevents randomSeed from working properly.
 //   https://github.com/arduino/Arduino/issues/575
 #define randomSeed(s) srandom(s)
@@ -37,11 +37,11 @@ void setup()
 
   // This routine sets up the watch dog timer with interrupt handler to maintain a
   // pool of real entropy for use in sketches.  This mechanism is relatively slow
-  // since it will only produce a little less than two 32-bit random values per 
+  // since it will only produce a little less than two 32-bit random values per
   // second.
   Entropy.initialize();
 
-  // The random method returns an unsigned 32-bit value, which can be cast as a 
+  // The random method returns an unsigned 32-bit value, which can be cast as a
   // signed value if needed.  The function will wait until sufficient entropy is
   // available to return, which could cause delays of up to approximately 500ms
   seed_value = Entropy.random();
@@ -49,7 +49,7 @@ void setup()
   Serial.print("Seed value = ");
   Serial.println(seed_value);
   
-  // By using the Entropy library to seed the normal pseudo-random number generator which 
+  // By using the Entropy library to seed the normal pseudo-random number generator which
   // ensures that the standard libraries random number generator will provide different starting
   // values each time the sketch is run.  This performs much better than the normal
   // randomSeed(analogRead(0)).

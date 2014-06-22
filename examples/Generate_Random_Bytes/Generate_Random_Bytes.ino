@@ -29,7 +29,7 @@ void setup()
 
   // This routine sets up the watch dog timer with interrupt handler to maintain a
   // pool of real entropy for use in sketches.  This mechanism is relatively slow
-  // since it will only produce a little less than two 32-bit random values per 
+  // since it will only produce a little less than two 32-bit random values per
   // second.
   Entropy.initialize();
 

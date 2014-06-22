@@ -34,8 +34,8 @@ void setup()
 
   // This routine sets up the watch dog timer with interrupt handler to maintain a
   // pool of real entropy for use in sketches.  This mechanism is relatively slow
-  // since it will only produce a little less than two 32-bit random values per 
-  // second.
+  // since it will only produce a little less than two 32-bit random values per
+  // seconds
   Entropy.initialize();
 
   // Simulate a coin flip
@@ -46,7 +46,7 @@ void setup()
   else
     Serial.println("heads.");
 
-  // Simulate rolling a six sided die; i.e. produce the numbers 1 through 6 with 
+  // Simulate rolling a six sided die; i.e. produce the numbers 1 through 6 with
   // equal probability
   random_byte = Entropy.random(1,7); // returns a value from 1 to 6
   Serial.print("The die rolled a ");

@@ -35,7 +35,7 @@ char mapChar(uint32_t parm)
   else if (parm < 64)      // map 38 to 63 to ascii a..z
     retval = char(59 + parm);
   else
-    retval = 0;            // if parm is invalid return null  
+    retval = 0;            // if parm is invalid return null
   return(retval);
 }
 
@@ -49,7 +49,7 @@ char *getPassword(char *pw)
   
   
   for (indx=0; indx<8; indx++)
-  { 
+  {
     tmp = mapChar(Entropy.random(64));
     pw[indx] = (char) tmp;
   }
@@ -87,6 +87,6 @@ void setup()
 }
 
 void loop()
-{ 
+{
 }
 
