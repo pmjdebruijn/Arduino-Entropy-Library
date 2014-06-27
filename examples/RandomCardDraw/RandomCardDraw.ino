@@ -24,7 +24,7 @@ void swap(int a, int b)
 void setup() {
   
   Serial.begin(9600);
-
+  
   // Initialize array with the sequence of values we will randomly draw from
   for (int i=0; i<=MAX_VALUE; i++) {
     RandomDraw[i] = i;
@@ -32,7 +32,7 @@ void setup() {
   
   // Initialize the Entropy library to ensure that the draws are truely random.
   Entropy.initialize();
-
+  
   Serial.print("Starting to draw random sequences from 1 to ");
   Serial.println(MAX_VALUE);
 }

@@ -47,7 +47,6 @@ char *getPassword(char *pw)
   int indx;
   uint32_t tmp;
   
-  
   for (indx=0; indx<8; indx++)
   {
     tmp = mapChar(Entropy.random(64));
@@ -66,10 +65,10 @@ void setup()
     ; // wait for serial port to connect. Needed for Leonardo and Due
   }
   Entropy.initialize();
-
+  
   Serial.print("Password: ");
   Serial.println(getPassword(pw));
-
+  
   // Here are some examples of passwords generated with this sketch on various arduino hardware:
   //
   // Password: z6wvnEpC
