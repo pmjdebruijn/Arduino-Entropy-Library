@@ -27,7 +27,7 @@ const uint8_t WDT_MAX_8INT=0xFF;
 const uint16_t WDT_MAX_16INT=0xFFFF;
 const uint32_t WDT_MAX_32INT=0xFFFFFFFF;
 // Since the Due TRNG is so fast we don't need a circular buffer for it
-#ifndef ARDUINO_SAM_DUE
+#ifndef ARDUINO_SAM_DUE || _VARIANT_FEATHER_M4_
  const uint8_t gWDT_buffer_SIZE=32;
  const uint8_t WDT_POOL_SIZE=8;
  uint8_t gWDT_buffer[gWDT_buffer_SIZE];
@@ -45,7 +45,7 @@ const uint32_t WDT_MAX_32INT=0xFFFFFFFF;
 // 16 ms) which is as fast as it can be set.
 void EntropyClass::initialize(void)
 {
-#ifndef ARDUINO_SAM_DUE
+#ifndef ARDUINO_SAM_DUE || _VARIANT_FEATHER_M4_
   gWDT_buffer_position=0;
   gWDT_pool_start = 0;
   gWDT_pool_end = 0;
@@ -62,6 +62,9 @@ void EntropyClass::initialize(void)
   pmc_enable_periph_clk(ID_TRNG);
   TRNG->TRNG_IDR = 0xFFFFFFFF;
   TRNG->TRNG_CR = TRNG_CR_KEY(0x524e47) | TRNG_CR_ENABLE;
+#elif defined(_VARIANT_FEATHER_M4_)
+  REG_MCLK_APBCMASK |= MCLK_APBCMASK_TRNG;
+  REG_TRNG_CTRLA |= TRNG_CTRLA_ENABLE;
 #elif defined(__arm__) && defined(TEENSYDUINO)
   SIM_SCGC5 |= SIM_SCGC5_LPTIMER;
   LPTMR0_CSR = 0b10000100;
@@ -84,6 +87,9 @@ uint32_t EntropyClass::random(void)
   while (! (TRNG->TRNG_ISR & TRNG_ISR_DATRDY))
     ;
   retVal = TRNG->TRNG_ODATA;
+#elif defined(_VARIANT_FEATHER_M4_)
+  while (! (REG_TRNG_INTFLAG & TRNG_INTFLAG_DATARDY) );
+  retVal = REG_TRNG_DATA;
 #else
   uint8_t waiting;
   while (gWDT_pool_count < 1)
@@ -275,13 +281,15 @@ uint8_t EntropyClass::available(void)
 {
 #ifdef ARDUINO_SAM_DUE
   return(TRNG->TRNG_ISR & TRNG_ISR_DATRDY);
+#elif defined(_VARIANT_FEATHER_M4_)
+  return(REG_TRNG_INTFLAG & TRNG_INTFLAG_DATARDY);
 #else
   return(gWDT_pool_count);
 #endif
 }
 
 // Circular buffer is not needed with the speed of the Arduino Due trng hardware generator
-#ifndef ARDUINO_SAM_DUE
+#ifndef ARDUINO_SAM_DUE || _VARIANT_FEATHER_M4_
 // This interrupt service routine is called every time the WDT interrupt is triggered.
 // With the default configuration that is approximately once every 16ms, producing
 // approximately two 32-bit integer values every second.

@@ -19,25 +19,31 @@
 #ifndef Entropy_h
 #define Entropy_h
 
+#if ARDUINO >= 100
+ #include "Arduino.h"
+#else
+ #include "WProgram.h"
+#endif
+
 #include <string.h>
 #include <math.h>
 
 // Separate the ARM Due headers we use
 #ifdef ARDUINO_SAM_DUE
-#include <sam.h>
-#include <sam3xa/include/component/component_trng.h>
+ #include <sam.h>
+ #include <sam3xa/include/component/component_trng.h>
 #endif
 
 // Teensy required headers
 #ifdef TEENSYDUINO
-#include <util/atomic.h>
+ #include <util/atomic.h>
 #endif
 
 //  Separate AVR headers from ARM headers
 #ifdef __AVR__
-#include <avr/interrupt.h>
-#include <avr/wdt.h>
-#include <util/atomic.h>
+ #include <avr/interrupt.h>
+ #include <avr/wdt.h>
+ #include <util/atomic.h>
 #endif
 
 const uint32_t WDT_RETURN_BYTE=256;
