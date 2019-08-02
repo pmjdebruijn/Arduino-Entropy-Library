@@ -26,6 +26,7 @@
 #ifdef ARDUINO_SAM_DUE
 #include <sam.h>
 #include <sam3xa/include/component/component_trng.h>
+#include <include/pmc.h>
 #endif
 
 // Teensy required headers
